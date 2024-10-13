@@ -1,4 +1,3 @@
-// api/route.js
 const Transport = require('../models/tranSport');
 
 module.exports = async (req, res) => {

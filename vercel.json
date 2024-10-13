@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "app/api/**/route.ts": {
-      "memory":  1024,
-      "maxDuration": 30
-    }
-  },
   "routes": [
     {
       "src": "/transports/(.*)",
