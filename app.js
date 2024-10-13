@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Transport = require('../models/transport');
+const Transport = require('../models/transport'); // ใช้พาธที่ถูกต้อง
 
 const app = express();
 app.use(express.json());
 
 // เชื่อมต่อกับ MongoDB
-async function connectToDatabase() {
+ function connectToDatabase() {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+         mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log('Connected to MongoDB');
     } catch (err) {
         console.error('Could not connect to MongoDB:', err);
@@ -16,10 +16,10 @@ async function connectToDatabase() {
     }
 }
 
-// API Endpoints
-app.get('/transports', async (req, res) => {
+// API Endpoint
+app.get('/transports', (req, res) => {
     try {
-        const transports = await Transport.find();
+        const transports =  Transport.find();
         res.json(transports);
     } catch (error) {
         console.error(error);
@@ -27,10 +27,10 @@ app.get('/transports', async (req, res) => {
     }
 });
 
-app.post('/transports', async (req, res) => {
+app.post('/transports',  (req, res) => {
     const transport = new Transport(req.body);
     try {
-        const savedTransport = await transport.save();
+        const savedTransport =  transport.save();
         res.status(201).json(savedTransport);
     } catch (error) {
         console.error(error);
@@ -38,5 +38,5 @@ app.post('/transports', async (req, res) => {
     }
 });
 
-// Export เป็นฟังก์ชัน Serverless
+// ส่งฟังก์ชันให้ Vercel
 module.exports = app;
