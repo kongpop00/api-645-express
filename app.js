@@ -8,7 +8,7 @@ const port = 3000;
 app.use(express.json());
 
 // เชื่อมต่อกับ MongoDB
-mongoose.connect('mongodb+srv://admin-465:0944902030@cluster0.9zfh9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected successfully'))
   .catch((err) => console.error(err));
 
