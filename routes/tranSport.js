@@ -1,25 +1,17 @@
-const express = require('express');
-const router = express.Router();
+// api/route.js
 const Transport = require('../models/tranSport');
 
-// GET - แสดงรายการทั้งหมด
-router.get('/', async (req, res) => {
-    const transports = await Transport.find();
-    res.json(transports);
-});
+module.exports = async (req, res) => {
+    if (req.method === 'GET') {
+        const transports = await Transport.find();
+        return res.status(200).json(transports);
+    }
 
-// POST - เพิ่มรายการใหม่
-router.post('/', async (req, res) => {
-    const transport = new Transport(req.body);
-    await transport.save();
-    res.status(201).json(transport);
-});
+    if (req.method === 'POST') {
+        const transport = new Transport(req.body);
+        await transport.save();
+        return res.status(201).json(transport);
+    }
 
-// DELETE - ลบรายการตาม ID
-router.delete('/:id', async (req, res) => {
-    const id = req.params.id;
-    await Transport.findByIdAndRemove(id);
-    res.status(204).send();
-});
-
-module.exports = router; // ส่งออก router
+    return res.status(405).send(); // Method Not Allowed
+};

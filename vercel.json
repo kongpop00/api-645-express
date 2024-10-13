@@ -1,8 +1,9 @@
 {
   "version": 2,
   "functions": {
-    "api/transports.js": {
-      "maxDuration": 60
+    "app/api/**/route.ts": {
+      "memory":  1024,
+      "maxDuration": 30
     }
   },
   "routes": [
