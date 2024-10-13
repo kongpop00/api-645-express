@@ -1,28 +1,42 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config(); // โหลดตัวแปรสภาพแวดล้อม
+const Transport = require('../models/transport');
+
 const app = express();
-const port = process.env.PORT || 3000;
-
-console.log('MongoDB URI:', process.env.MONGODB_URI);
-
-// Middleware เพื่อแปลง JSON body
 app.use(express.json());
 
 // เชื่อมต่อกับ MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB:', err));
+async function connectToDatabase() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log('Connected to MongoDB');
+    } catch (err) {
+        console.error('Could not connect to MongoDB:', err);
+        process.exit(1);
+    }
+}
 
-// ตั้งค่า router
-app.use('/transports', require('./routes/tranSport'));
-
-// ติดตั้ง route สำหรับ root
-app.get('/', (req, res) => {
-  res.send('Welcome to the Transport API!');
+// API Endpoints
+app.get('/transports', async (req, res) => {
+    try {
+        const transports = await Transport.find();
+        res.json(transports);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving transports');
+    }
 });
 
-// เริ่มเซิร์ฟเวอร์
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.post('/transports', async (req, res) => {
+    const transport = new Transport(req.body);
+    try {
+        const savedTransport = await transport.save();
+        res.status(201).json(savedTransport);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send('Error creating transport');
+    }
 });
+
+// Export เป็นฟังก์ชัน Serverless
+module.exports = app;
