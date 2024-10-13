@@ -1,17 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const transportsRouter = require('./routes/tranSport'); // Import transports router
+const transportsRouter = require('./routes/transports');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware เพื่อแปลง JSON body
 app.use(express.json());
 
 // เชื่อมต่อกับ MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected successfully'))
-  .catch((err) => console.error(err));
-
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB:', err));
 
 // ใช้ router สำหรับ /transports
 app.use('/transports', transportsRouter);
