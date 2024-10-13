@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Transport = require('../models/tranSport'); // Import model
+const Transport = require('../models/tranSport');
 
 // GET - แสดงรายการทั้งหมด
 router.get('/', async (req, res) => {
