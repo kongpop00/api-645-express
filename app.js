@@ -6,9 +6,9 @@ const app = express();
 app.use(express.json());
 
 // เชื่อมต่อกับ MongoDB
-async function connectToDatabase() {
+function connectToDatabase() {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+         mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log('Connected to MongoDB');
     } catch (err) {
         console.error('Could not connect to MongoDB:', err);
@@ -17,20 +17,20 @@ async function connectToDatabase() {
 }
 
 // API Endpoint
-app.get('/transports', async (req, res) => {
+app.get('/transports', (req, res) => {
     try {
-        const transports = await Transport.find();
+        const transports =  Transport.find();
         res.json(transports);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error retrieving transports');
-    }
+    } 
 });
 
-app.post('/transports', async (req, res) => {
+app.post('/transports',  (req, res) => {
     const transport = new Transport(req.body);
     try {
-        const savedTransport = await transport.save();
+        const savedTransport =  transport.save();
         res.status(201).json(savedTransport);
     } catch (error) {
         console.error(error);
