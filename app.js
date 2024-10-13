@@ -4,7 +4,6 @@ require('dotenv').config(); // โหลดตัวแปรสภาพแว�
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ตรวจสอบค่า MONGODB_URI
 console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 // Middleware เพื่อแปลง JSON body
