@@ -1,11 +1,10 @@
 {
+  "version": 2,
   "functions": {
-    "api/**/*.js": {
-      "maxDuration": 30 
+    "app.js": {
+      "maxDuration": 30
     }
   },
-  "version": 2,
-  
   "builds": [
     {
       "src": "app.js",
