@@ -1,10 +1,14 @@
 {
   "version": 2,
- 
+  "functions": {
+    "api/transports.js": {
+      "maxDuration": 60
+    }
+  },
   "routes": [
     {
       "src": "/transports/(.*)",
-      "dest": "api/app.js"
+      "dest": "api/transports.js"
     }
   ]
 }
